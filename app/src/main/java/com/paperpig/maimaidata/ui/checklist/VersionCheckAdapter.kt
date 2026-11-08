@@ -16,8 +16,8 @@ import com.paperpig.maimaidata.databinding.ItemSongCheckBinding
 import com.paperpig.maimaidata.db.entity.RecordEntity
 import com.paperpig.maimaidata.db.entity.SongWithChartsEntity
 import com.paperpig.maimaidata.glide.GlideApp
-import com.paperpig.maimaidata.network.MaimaiDataClient
 import com.paperpig.maimaidata.ui.songdetail.SongDetailActivity
+import com.paperpig.maimaidata.utils.SongJacketUtils
 import com.paperpig.maimaidata.utils.toDp
 
 class VersionCheckAdapter(
@@ -144,7 +144,9 @@ class VersionCheckAdapter(
                     )
                 )
                 GlideApp.with(holder.itemView.context)
-                    .load(MaimaiDataClient.IMAGE_BASE_URL + data.songData.imageUrl)
+                    .load(SongJacketUtils.jacketAssetUrl(data.songData.id))
+                    .placeholder(R.drawable.mmd_song_jacket_placeholder)
+                    .error(R.drawable.mmd_song_jacket_placeholder)
                     .into(this)
             }
 

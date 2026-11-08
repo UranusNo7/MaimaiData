@@ -20,11 +20,6 @@ data class DsSongData(
     val type: String,
 
     /**
-     * 曲封url
-     */
-    val imageUrl: String?,
-
-    /**
      * 难度索引
      */
     val levelIndex: Int,

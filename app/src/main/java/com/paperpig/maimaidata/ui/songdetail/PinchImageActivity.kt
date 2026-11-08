@@ -19,9 +19,9 @@ import com.bumptech.glide.request.target.Target
 import com.paperpig.maimaidata.R
 import com.paperpig.maimaidata.databinding.ActivityPinchImageBinding
 import com.paperpig.maimaidata.glide.GlideApp
-import com.paperpig.maimaidata.network.MaimaiDataClient
 import com.paperpig.maimaidata.utils.PermissionHelper
 import com.paperpig.maimaidata.utils.PictureUtils
+import com.paperpig.maimaidata.utils.SongJacketUtils
 import com.paperpig.maimaidata.utils.setDebouncedClickListener
 import kotlinx.coroutines.launch
 
@@ -38,13 +38,11 @@ class PinchImageActivity : AppCompatActivity() {
         }
 
     companion object {
-        const val IMAGE_URL = "url"
-        const val COVER_ID = "id"
+        const val SONG_ID = "song_id"
 
-        fun actionStart(context: Context, url: String, id: String, bundle: Bundle) {
+        fun actionStart(context: Context, songId: Int, bundle: Bundle) {
             val intent = Intent(context, PinchImageActivity::class.java).apply {
-                putExtra(IMAGE_URL, url)
-                putExtra(COVER_ID, id)
+                putExtra(SONG_ID, songId)
             }
             context.startActivity(intent, bundle)
         }
@@ -59,15 +57,13 @@ class PinchImageActivity : AppCompatActivity() {
 
         permissionHelper = PermissionHelper.with(this)
 
-        val thumbnailUrl = intent.getStringExtra(IMAGE_URL)
+        val songId = intent.getIntExtra(SONG_ID, 0)
 
-        val largeImageId = intent.getStringExtra(COVER_ID)?.padStart(5, '0')
-
-        val largeCoverUrl = "${MaimaiDataClient.DIVING_FISH_COVER_URL}$largeImageId.png"
+        val coverFileName = songId.toString().padStart(5, '0')
 
         GlideApp.with(this)
-            .load(largeCoverUrl)
-            .thumbnail(GlideApp.with(this).load(thumbnailUrl))
+            .load(SongJacketUtils.jacketAssetUrl(songId))
+            .error(R.drawable.mmd_song_jacket_placeholder)
             .addListener(coverLoadListener())
             .into(binding.pinchImageView)
 
@@ -83,7 +79,7 @@ class PinchImageActivity : AppCompatActivity() {
                                     this@PinchImageActivity,
                                     coverDrawable!!.toBitmap(400, 400),
                                     PictureUtils.coverPath,
-                                    largeImageId!!
+                                    coverFileName
                                 )
 
                             }
@@ -141,7 +137,7 @@ class PinchImageActivity : AppCompatActivity() {
 
 
     /**
-     * 网络图片加载监听
+     * 曲绘加载监听
      */
     private fun coverLoadListener(): RequestListener<Drawable> {
         return object : RequestListener<Drawable> {

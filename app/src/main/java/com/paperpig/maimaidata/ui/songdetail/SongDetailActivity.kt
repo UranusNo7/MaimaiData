@@ -25,10 +25,10 @@ import com.paperpig.maimaidata.db.AppDataBase
 import com.paperpig.maimaidata.db.entity.RecordEntity
 import com.paperpig.maimaidata.db.entity.SongWithChartsEntity
 import com.paperpig.maimaidata.glide.GlideApp
-import com.paperpig.maimaidata.network.MaimaiDataClient
 import com.paperpig.maimaidata.repository.AliasRepository
 import com.paperpig.maimaidata.repository.RecordRepository
 import com.paperpig.maimaidata.utils.Constants
+import com.paperpig.maimaidata.utils.SongJacketUtils
 import com.paperpig.maimaidata.utils.SpUtil
 import com.paperpig.maimaidata.utils.setCopyOnLongClick
 import com.paperpig.maimaidata.utils.setShrinkOnTouch
@@ -92,7 +92,9 @@ class SongDetailActivity : AppCompatActivity() {
             }
             toolbarLayout.setContentScrimResource(songData.bgColor)
             GlideApp.with(this@SongDetailActivity)
-                .load(MaimaiDataClient.IMAGE_BASE_URL + songData.imageUrl)
+                .load(SongJacketUtils.jacketAssetUrl(songData.id))
+                .placeholder(R.drawable.mmd_song_jacket_placeholder)
+                .error(R.drawable.mmd_song_jacket_placeholder)
                 .into(songJacket)
             songJacket.setBackgroundColor(
                 ContextCompat.getColor(
@@ -195,8 +197,7 @@ class SongDetailActivity : AppCompatActivity() {
                     )
                 PinchImageActivity.actionStart(
                     this@SongDetailActivity,
-                    MaimaiDataClient.IMAGE_BASE_URL + songData.imageUrl,
-                    songData.id.toString(),
+                    songData.id,
                     options.toBundle()
                 )
             }

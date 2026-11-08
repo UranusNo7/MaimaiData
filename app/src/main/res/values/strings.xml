@@ -65,7 +65,7 @@
     <string name="inner_level_up">%.1f↑</string>
     <string name="inner_level_down">%.1f↓</string>
     <string name="inner_level_old">(%.1f)</string>
-    <string name="download_cover_error">下载图片失败</string>
+    <string name="download_cover_error">本地曲绘加载失败</string>
     <string name="share_cover">分享图片</string>
 
 

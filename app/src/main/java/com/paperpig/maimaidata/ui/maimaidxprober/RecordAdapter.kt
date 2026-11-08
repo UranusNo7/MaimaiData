@@ -19,9 +19,9 @@ import com.paperpig.maimaidata.databinding.MmdPlayerRtsongLayoutBinding
 import com.paperpig.maimaidata.db.entity.RecordEntity
 import com.paperpig.maimaidata.db.entity.SongWithChartsEntity
 import com.paperpig.maimaidata.glide.GlideApp
-import com.paperpig.maimaidata.network.MaimaiDataClient
 import com.paperpig.maimaidata.ui.songdetail.SongDetailActivity
 import com.paperpig.maimaidata.utils.ConvertUtils
+import com.paperpig.maimaidata.utils.SongJacketUtils
 import com.paperpig.maimaidata.utils.toDp
 
 class RecordAdapter(private val dataList: List<SongWithChartsEntity>) :
@@ -119,7 +119,9 @@ class RecordAdapter(private val dataList: List<SongWithChartsEntity>) :
                     SongDetailActivity.actionStart(viewHolder.itemView.context, data)
                 }
                 GlideApp.with(context)
-                    .load(MaimaiDataClient.IMAGE_BASE_URL + data.songData.imageUrl)
+                    .load(SongJacketUtils.jacketAssetUrl(data.songData.id))
+                    .placeholder(R.drawable.mmd_song_jacket_placeholder)
+                    .error(R.drawable.mmd_song_jacket_placeholder)
                     .transition(DrawableTransitionOptions.withCrossFade()).apply(
                         RequestOptions.bitmapTransform(
                             RoundedCorners(

@@ -18,7 +18,6 @@ import com.paperpig.maimaidata.R
 import com.paperpig.maimaidata.db.entity.RecordEntity
 import com.paperpig.maimaidata.db.entity.SongWithChartsEntity
 import com.paperpig.maimaidata.glide.GlideApp
-import com.paperpig.maimaidata.network.MaimaiDataClient
 import com.paperpig.maimaidata.widgets.Settings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -214,7 +213,7 @@ object CreateBest50 {
         //绘制曲封
         val jacketBitmap: Bitmap = try {
             GlideApp.with(context).asBitmap().override(158, 155).centerCrop()
-                .load(MaimaiDataClient.IMAGE_BASE_URL + find!!.songData.imageUrl).submit()
+                .load(SongJacketUtils.jacketAssetUrl(find!!.songData.id)).submit()
                 .get()
         } catch (_: Exception) {
             GlideApp.with(context).asBitmap().override(158, 155).centerCrop()

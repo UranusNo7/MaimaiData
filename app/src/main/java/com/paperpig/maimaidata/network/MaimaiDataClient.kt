@@ -20,8 +20,6 @@ class MaimaiDataClient private constructor() {
         }
 
         const val BASE_URL = "https://www.diving-fish.com"
-        const val IMAGE_BASE_URL = "https://maimaidx.jp/maimai-mobile/img/Music/"
-        const val DIVING_FISH_COVER_URL = "https://www.diving-fish.com/covers/"
 
     }
 

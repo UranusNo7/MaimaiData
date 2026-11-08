@@ -17,9 +17,9 @@ import com.paperpig.maimaidata.db.entity.RecordEntity
 import com.paperpig.maimaidata.db.entity.SongWithChartsEntity
 import com.paperpig.maimaidata.glide.GlideApp
 import com.paperpig.maimaidata.model.DsSongData
-import com.paperpig.maimaidata.network.MaimaiDataClient
 import com.paperpig.maimaidata.ui.songdetail.SongDetailActivity
 import com.paperpig.maimaidata.utils.Constants
+import com.paperpig.maimaidata.utils.SongJacketUtils
 import com.paperpig.maimaidata.utils.toDp
 
 class LevelCheckAdapter(
@@ -52,7 +52,6 @@ class LevelCheckAdapter(
                         datum.songData.id,
                         datum.songData.title,
                         datum.songData.type,
-                        datum.songData.imageUrl,
                         i,
                         datum.charts[i].ds
                     )
@@ -164,7 +163,10 @@ class LevelCheckAdapter(
                     )
                 )
                 GlideApp.with(holder.itemView.context)
-                    .load(MaimaiDataClient.IMAGE_BASE_URL + data.imageUrl).into(holder.songJacket)
+                    .load(SongJacketUtils.jacketAssetUrl(data.songId))
+                    .placeholder(R.drawable.mmd_song_jacket_placeholder)
+                    .error(R.drawable.mmd_song_jacket_placeholder)
+                    .into(holder.songJacket)
             }
             if (data.type == Constants.CHART_TYPE_DX) {
                 GlideApp.with(holder.itemView.context).load(R.drawable.ic_deluxe)

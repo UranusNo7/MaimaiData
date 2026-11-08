@@ -20,9 +20,9 @@ import com.paperpig.maimaidata.databinding.ItemNormalSongBinding
 import com.paperpig.maimaidata.databinding.ItemUtageSongBinding
 import com.paperpig.maimaidata.db.entity.SongWithChartsEntity
 import com.paperpig.maimaidata.glide.GlideApp
-import com.paperpig.maimaidata.network.MaimaiDataClient
 import com.paperpig.maimaidata.ui.songdetail.SongDetailActivity
 import com.paperpig.maimaidata.utils.Constants
+import com.paperpig.maimaidata.utils.SongJacketUtils
 import com.paperpig.maimaidata.utils.toDp
 
 
@@ -140,7 +140,9 @@ class SongListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
 
             GlideApp.with(holder.itemView.context)
-                .load(MaimaiDataClient.IMAGE_BASE_URL + songData.imageUrl)
+                .load(SongJacketUtils.jacketAssetUrl(songData.id))
+                .placeholder(R.drawable.mmd_song_jacket_placeholder)
+                .error(R.drawable.mmd_song_jacket_placeholder)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.songJacket)
             holder.songJacket.setBackgroundColor(
@@ -178,7 +180,9 @@ class SongListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
 
             GlideApp.with(holder.itemView.context)
-                .load(MaimaiDataClient.IMAGE_BASE_URL + songData.imageUrl)
+                .load(SongJacketUtils.jacketAssetUrl(songData.id))
+                .placeholder(R.drawable.mmd_song_jacket_placeholder)
+                .error(R.drawable.mmd_song_jacket_placeholder)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.songJacket)
             holder.songJacket.setBackgroundColor(
